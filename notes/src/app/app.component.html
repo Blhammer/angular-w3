@@ -1,0 +1,41 @@
+<main class="main">
+  <div class="container">
+    <div class="add-note">
+      <label for="title">Заглавие:</label>
+      <input type="text" id="title" [(ngModel)]="newNote.title" />
+      <br />
+      <label for="content">Съдържание:</label>
+      <textarea id="content" [(ngModel)]="newNote.content"></textarea>
+      <br />
+      @if(errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+      }
+      <button class="save-note" (click)="saveAddNote()">
+        {{ selectedNote ? "Запази промените" : "Добави бележка" }}
+      </button>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="notes-list">
+      <h2>Съхранени бележки:</h2>
+      @for(note of notes; track $index) {
+      <div
+        class="note"
+        [class.selected]="note === selectedNote"
+        (click)="selectNote(note)"
+      >
+        <div>
+          <strong>{{ note.title }}</strong>
+          <p>{{ note.content }}</p>
+        </div>
+
+        @if(note === selectedNote) {
+        <button (click)="editNote(note)">Редактирай</button>
+        <button (click)="deleteNote(note)">Изтрий</button>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</main>
